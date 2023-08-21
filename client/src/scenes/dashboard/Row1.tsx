@@ -174,7 +174,7 @@ const Row1 = () => {
           <XAxis dataKey="name" axisLine={false} tickLine={false} style={{ fontSize: '10px'}} />
           <YAxis axisLine={false} tickLine={false} style={{ fontSize: '10px'}}/>
           <Tooltip />
-          <Bar dataKey="revenue" fill="url(@colorRevenue)" />
+          <Bar dataKey="revenue" fill="url(#colorRevenue)" />
         </BarChart>
       </ResponsiveContainer>
     </DashboardBox>
