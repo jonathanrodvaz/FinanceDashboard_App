@@ -43,6 +43,7 @@ mongoose
   })
   .then(async () => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    console.log('Conexion Correcta')
 
     /* ADD DATA ONE TIME ONLY OR AS NEEDED */
     // ADD DATA TO MONGDB
@@ -52,3 +53,4 @@ mongoose
     // Transaction.insertMany(modifiedTransactions);
   })
   .catch((error) => console.log("Conection error: ", error));
+  
