@@ -5,7 +5,7 @@ import { Box, Typography, useTheme, Button } from '@mui/material'
 import { useMemo, useState } from 'react'
 import { CartesianGrid, Label, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import regression, { DataPoint } from 'regression';
-
+import { PaletteType } from '@/types/paletteTypes'
 
 const Predictions = () => {
     const { palette } = useTheme();
@@ -21,6 +21,7 @@ const Predictions = () => {
             }
         );
         const regressionLine = regression.linear(formatted);
+        
         return monthData.map(({ month, revenue }, i: number) => {
             return {
                 name: month,
@@ -30,6 +31,7 @@ const Predictions = () => {
             }
         })
     }, [kpiData]);
+    const typedPalette = palette as unknown as { grey: PaletteType, primary: PaletteType, secondary: PaletteType, tertiary: PaletteType };
 
   return <DashboardBox 
   width="100%" 
@@ -48,8 +50,8 @@ const Predictions = () => {
         
         onClick={() => setIsPredictions(!isPredictions)}
         sx={{
-            color: palette.grey[900],
-            backgroundColor: palette.grey[700],
+            color: typedPalette.grey[900],
+            backgroundColor: typedPalette.grey[700],
             boxShadow: "0.1rem 0.1rem 0.1rem 0.1rem rgba(0,0,0,.4)"
             
         }}
@@ -69,7 +71,7 @@ const Predictions = () => {
         >
           {/* Si quitamos la linea de abajo lograremos que quitar el fondo cuadriculado del grafico */}
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
-          <CartesianGrid strokeDasharray='3 3' stroke={palette.grey[800]} />
+          <CartesianGrid strokeDasharray='3 3' stroke={typedPalette.grey[800]} />
           <XAxis dataKey="name" tickLine={false} style={{ fontSize: "10px"}}>
             <Label value='Month' offset={-5} position='insideBottom' />
             </XAxis>
@@ -96,7 +98,7 @@ const Predictions = () => {
             <Line 
             type="monotone"
             dataKey="Predicted Revenue"
-            stroke={palette.secondary[500]}
+            stroke={typedPalette.secondary[500]}
             />
           )}
         </LineChart>

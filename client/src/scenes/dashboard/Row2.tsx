@@ -5,6 +5,7 @@ import { useGetKpisQuery, useGetProductsQuery } from "@/state/api";
 import { Box, Typography, useTheme } from '@mui/material';
 import { useMemo } from 'react'
 import { CartesianGrid, Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis, ZAxis } from 'recharts';
+import { PaletteType } from '@/types/paletteTypes'
 
 const pieData = [
   { name: "Group A", value: 600 },
@@ -12,11 +13,14 @@ const pieData = [
 ]
 
 const Row2 = () => {
+  
   const { palette } = useTheme();
-  const pieColors = [palette.primary[800], palette.primary[300]];
+  const typedPalette = palette as unknown as { grey: PaletteType, primary: PaletteType, secondary: PaletteType, tertiary: PaletteType };
+  const pieColors = [typedPalette.primary[800], typedPalette.primary[300]];
   const { data: operationalData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
  
+  
   const operationalExpenses = useMemo(() => {
     return (
       operationalData &&
@@ -62,7 +66,7 @@ const Row2 = () => {
         >
           {/* Si quitamos la linea de abajo lograremos que quitar el fondo cuadriculado del grafico */}
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
-          <CartesianGrid vertical={false} stroke={palette.grey[800]} />
+          <CartesianGrid vertical={false} stroke={typedPalette.grey[800]} />
           <XAxis dataKey="name" tickLine={false} style={{ fontSize: "10px"}}/>
           <YAxis yAxisId="left" orientation="left" tickLine={false} axisLine={false} style={{ fontSize: "10px"}}/>
           <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} style={{ fontSize: "10px"}}/>
@@ -72,7 +76,7 @@ const Row2 = () => {
           yAxisId="left"
           type="monotone"
           dataKey="Non Operational Expenses"
-          stroke={palette.tertiary[500]}
+          stroke={typedPalette.tertiary[500]}
           />
           <Line 
           yAxisId="right"
@@ -105,13 +109,13 @@ const Row2 = () => {
           dataKey="value"
         >
           {pieData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={pieColors[index]} />
+            <Cell key={`cell-${entry.name}-${index}`} fill={pieColors[index]} />
           ))}
         </Pie>
       </PieChart>
       <Box ml="-0.7rem" flexBasis="40%" textAlign="center">
             <Typography variant="h5">Target Sales</Typography>
-            <Typography m="0.3rem 0" variant="h3" color={palette.primary[300]}>83</Typography>
+            <Typography m="0.3rem 0" variant="h3" color={typedPalette.primary[300]}>83</Typography>
             <Typography variant="h6">Finance goals of the campaign that is desired</Typography>
       </Box>
       <Box  flexBasis="40%" >
@@ -133,7 +137,7 @@ const Row2 = () => {
             left: -10,
           }}
         >
-          <CartesianGrid stroke={palette.grey[800]}/>
+          <CartesianGrid stroke={typedPalette.grey[800]}/>
           <XAxis type="number" 
           dataKey="price" 
           name="price" 
@@ -155,7 +159,7 @@ const Row2 = () => {
           <Scatter 
           name="Product Expense Ratio" 
           data={productExpenseData} 
-          fill={palette.tertiary[500]} />
+          fill={typedPalette.tertiary[500]} />
         </ScatterChart>
         </ResponsiveContainer>
         </DashboardBox>

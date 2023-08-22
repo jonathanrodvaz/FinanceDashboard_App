@@ -5,7 +5,7 @@ import { ResponsiveContainer, Bar, BarChart, AreaChart, Legend, LineChart, Carte
 import { useTheme } from '@mui/material/styles';
 import { useMemo } from 'react';
 import BoxHeader from '@/components/BoxHeader';
-
+import { PaletteType } from '@/types/paletteTypes'
 
 
 const Row1 = () => {
@@ -51,7 +51,7 @@ const Row1 = () => {
       })
     );
   }, [data]);
-
+  const typedPalette = palette as unknown as { grey: PaletteType, primary: PaletteType, secondary: PaletteType, tertiary: PaletteType };
   return (
     <>
     <DashboardBox  gridArea="a">
@@ -76,12 +76,12 @@ const Row1 = () => {
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
           <defs>
             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.5} />
-              <stop offset="95%" stopColor={palette.primary[300]} stopOpacity={0} />
+              <stop offset="5%" stopColor={typedPalette.primary[300]} stopOpacity={0.5} />
+              <stop offset="95%" stopColor={typedPalette.primary[300]} stopOpacity={0} />
             </linearGradient>
             <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.5} />
-              <stop offset="95%" stopColor={palette.primary[300]} stopOpacity={0} />
+              <stop offset="5%" stopColor={typedPalette.primary[300]} stopOpacity={0.5} />
+              <stop offset="95%" stopColor={typedPalette.primary[300]} stopOpacity={0} />
             </linearGradient>
           </defs>
           <XAxis dataKey="name" tickLine={false} style={{ fontSize: "10px"}}/>
@@ -123,7 +123,7 @@ const Row1 = () => {
         >
           {/* Si quitamos la linea de abajo lograremos que quitar el fondo cuadriculado del grafico */}
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
-          <CartesianGrid vertical={false} stroke={palette.grey[800]} />
+          <CartesianGrid vertical={false} stroke={typedPalette.grey[800]} />
           <XAxis dataKey="name" tickLine={false} style={{ fontSize: "10px"}}/>
           <YAxis yAxisId="left" tickLine={false} axisLine={false} style={{ fontSize: "10px"}}/>
           <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} style={{ fontSize: "10px"}}/>
@@ -135,7 +135,7 @@ const Row1 = () => {
           yAxisId="left"
           type="monotone"
           dataKey="profit"
-          stroke={palette.tertiary[500]}
+          stroke={typedPalette.tertiary[500]}
           />
           <Line 
           yAxisId="right"
@@ -166,11 +166,11 @@ const Row1 = () => {
         >
           <defs>
           <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={palette.primary[300]} stopOpacity={0} />
+              <stop offset="5%" stopColor={typedPalette.primary[300]} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={typedPalette.primary[300]} stopOpacity={0} />
             </linearGradient>
             </defs>
-          <CartesianGrid vertical={false} stroke={palette.grey[800]}/>
+          <CartesianGrid vertical={false} stroke={typedPalette.grey[800]}/>
           <XAxis dataKey="name" axisLine={false} tickLine={false} style={{ fontSize: '10px'}} />
           <YAxis axisLine={false} tickLine={false} style={{ fontSize: '10px'}}/>
           <Tooltip />

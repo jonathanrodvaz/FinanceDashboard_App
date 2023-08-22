@@ -5,14 +5,16 @@ import { useGetKpisQuery, useGetProductsQuery, useGetTransactionsQuery } from '@
 import { Box, Typography, useTheme } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { GridCellParams } from '@mui/x-data-grid/models'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { Cell, Pie, PieChart } from 'recharts'
+import { PaletteType } from '@/types/paletteTypes'
 
-type Props = {}
 
-const Row3 = (props: Props) => {
+
+const Row3 = () => {
   const { palette } = useTheme();
-  const pieColors = [palette.primary[800], palette.primary[500]];
+  const typedPalette = palette as unknown as { grey: PaletteType, primary: PaletteType, secondary: PaletteType, tertiary: PaletteType };
+  const pieColors = [typedPalette.primary[800], typedPalette.primary[500]];
 
   const { data: kpiData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
@@ -96,14 +98,14 @@ const pieChartData = useMemo(() => {
         height="75%"
         sx={{
           "& .MuiDataGrid-root": {
-            color: palette.grey[300],
+            color: typedPalette.grey[300],
             border: "none"
           },
           "& .MuiDataGrid-cell": {
-            borderBottom: `1px solid ${palette.grey[800]} !important`
+            borderBottom: `1px solid ${typedPalette.grey[800]} !important`
           },
           "& .MuiDataGrid-columnHeaders": {
-            borderBottom: `1px solid ${palette.grey[800]} !important`
+            borderBottom: `1px solid ${typedPalette.grey[800]} !important`
           },
           "& .MuiDataGrid-columnSeparator": {
             visibility: 'hidden',
@@ -128,14 +130,14 @@ const pieChartData = useMemo(() => {
         height="80%"
         sx={{
           "& .MuiDataGrid-root": {
-            color: palette.grey[300],
+            color: typedPalette.grey[300],
             border: "none"
           },
           "& .MuiDataGrid-cell": {
-            borderBottom: `1px solid ${palette.grey[800]} !important`
+            borderBottom: `1px solid ${typedPalette.grey[800]} !important`
           },
           "& .MuiDataGrid-columnHeaders": {
-            borderBottom: `1px solid ${palette.grey[800]} !important`
+            borderBottom: `1px solid ${typedPalette.grey[800]} !important`
           },
           "& .MuiDataGrid-columnSeparator": {
             visibility: 'hidden',
@@ -173,7 +175,7 @@ const pieChartData = useMemo(() => {
           dataKey="value"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={pieColors[index]} />
+            <Cell key={`cell-${entry.name}-${index}`} fill={pieColors[index]} />
           ))}
         </Pie>
       </PieChart>
@@ -187,11 +189,11 @@ const pieChartData = useMemo(() => {
           <Box
           height="15px"
           margin="1.25rem 1rem 0.4rem 1rem"
-          bgcolor={palette.primary[800]}
+          bgcolor={typedPalette.primary[800]}
           borderRadius="1rem"
           >
             <Box height="15px"
-            bgcolor={palette.primary[600]}
+            bgcolor={typedPalette.primary[600]}
             borderRadius="1rem"
             width="40%">
             </Box>
