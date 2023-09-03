@@ -24,6 +24,13 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: "false" }))
 app.use(cors())
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://finance-dashboard-app-xsot-52x0zis86-jonathanrodvaz.vercel.app');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+})
+
+
 // ROUTES 
 app.use("/kpi", kpiRoutes)
 app.use("/product", productRoutes)
